@@ -5,6 +5,14 @@
 
 > **动手改之前先读 [AGENTS.md](AGENTS.md)**：那里是硬约束、本机环境坑和收尾自检清单。
 
+## 现有技能
+
+| 技能 | 做什么 | 版本 |
+|---|---|---|
+| [`bilingual-subtitle`](skills/bilingual-subtitle/SKILL.md) | 外语视频 → 双语字幕成片：本地 Whisper 转写 → 断句 → 模型翻译 → 烧录/封装 → 验收 | 见 `SKILL.md` 的 `version` |
+
+版本号不在这里写死，以各技能 `SKILL.md` 的 `version` 为准；已发布版本见 `git tag`。
+
 ## 目录职责
 
 | 路径 | 作用 | 入库 |
@@ -15,13 +23,15 @@
 | `build/link.py` | 链接进 WorkBuddy 用户技能目录，便于测试 | ✅ |
 | `build/out/` | 生成的 zip | ❌ 可随时重打 |
 | `dev/input/` | 测试视频 | ❌ |
-| `dev/work/`、`dev/output/` | 转写中间产物、成片、抽帧 | ❌ |
+| `dev/work/` | 转写中间产物、待译条目 | ❌ |
+| `dev/output/` | 成片、抽帧 | ❌ |
+| `dev/smoke/`、`dev/subtitles/` | 早期试跑残留 | ❌ |
 | `dev/archive/` | 历史版本快照（git 之前的手工备份） | ❌ |
 | `docs/source/` | 原始稿件 | ✅ |
 | `tests/fixtures/` | 少量文本样例（JSON / srt），可复现 | ✅ |
 
-**为什么 `dev/` 不入库**：测试素材是 275MB 的二进制视频，且每次跑流程都在变。放进去只会让仓库不可克隆、
-让 `git status` 永远脏。技能源码总共才 120KB，仓库保持这个量级才有意义。
+**为什么 `dev/` 不入库**：测试素材是几百 MB 的二进制视频，且每次跑流程都在变。放进去只会让仓库不可克隆、
+让 `git status` 永远脏。技能源码是纯文本，量级差三个数量级，仓库保持轻量才有意义。
 
 ## 日常流程
 
@@ -39,8 +49,13 @@ python build/pack.py check skills/bilingual-subtitle
 python build/pack.py pack skills/bilingual-subtitle
 
 # 5. 提交 + 打 tag（版本号与 tag 必须对应）
-git add -A && git commit -m "feat(bilingual-subtitle): 新增本地 Whisper 转写"
-git tag bilingual-subtitle-v1.1.0
+#    只暂存本次改动的文件，不要 git add -A（见 AGENTS.md 5.2）
+git add skills/bilingual-subtitle/SKILL.md skills/bilingual-subtitle/CHANGELOG.md
+git commit -m "feat(bilingual-subtitle): 新增本地 Whisper 转写"
+
+#    版本号从 SKILL.md 读，避免手抄错
+V=$(sed -n 's/^version: *//p' skills/bilingual-subtitle/SKILL.md | head -1)
+git tag "bilingual-subtitle-v$V" && git push origin main "bilingual-subtitle-v$V"
 ```
 
 上传步骤见 [docs/publish.md](docs/publish.md)。
@@ -56,7 +71,7 @@ git tag bilingual-subtitle-v1.1.0
 | 新增脚本 / 子命令 / 流程步骤 | minor | `1.0.0` → `1.1.0` |
 | 流程结构变了，老用法失效 | major | `1.x` → `2.0.0` |
 
-**tag 格式：`<技能名>-v<版本>`**，例如 `bilingual-subtitle-v1.1.0`。
+**tag 格式：`<技能名>-v<版本>`**，例如 `bilingual-subtitle-v<version>`。
 加技能名前缀是因为一个仓库有多个技能，只写 `v1.1.0` 会分不清是谁的版本。
 
 ## 提交信息
@@ -65,6 +80,8 @@ git tag bilingual-subtitle-v1.1.0
 
 - `type` 取 `feat` / `fix` / `docs` / `chore` / `refactor` / `test`
 - `scope` 是技能名，跨技能的改动可省略
+- **一次提交只做一件事**：技能改动要带同它的 `version` 与 `CHANGELOG` 条目；
+  改技能和改 `build/` 下的工具不要混在一起（判据见 [AGENTS.md](AGENTS.md) 5.2）
 
 ```
 feat(bilingual-subtitle): 新增本地 Whisper 转写入口
