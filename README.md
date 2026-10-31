@@ -61,6 +61,24 @@ git tag "bilingual-subtitle-v$V" && git push origin main "bilingual-subtitle-v$V
 
 上传步骤见 [docs/publish.md](docs/publish.md)。
 
+## 用 gh 发版（可选）
+
+`gh` 装在 `~/.workbuddy/tools/gh/bin/gh.exe`，但**不要 `gh auth login`**——GCM 缓存的是
+40 位 classic PAT，没有 `read:org`，登录校验会被拒。用 `build/gh.sh` 代替，它把同一凭据以
+`GH_TOKEN` 传给 gh，token 不落任何文件：
+
+```bash
+# 给 tag 建 Release，并把打包产物挂上去（市场之外的第二份可下载存档）
+bash build/gh.sh release create "bilingual-subtitle-v$V" \
+  "build/out/bilingual-subtitle-$V.zip" \
+  --title "bilingual-subtitle $V" --notes-file /tmp/rel.md
+
+bash build/gh.sh release list -R knight008848/workbuddy-skillkit
+```
+
+下载 release 资产时注意：GitHub 会 302 跳到 `objects.githubusercontent.com`，本机直连超时、
+走代理只有几 KB/s。加镜像前缀即可（见 [AGENTS.md](AGENTS.md) 第 6 节）。
+
 ## 版本约定
 
 **`SKILL.md` 的 `version` 是唯一真源**。`CHANGELOG.md` 顶部条目的版本必须与之一致，`pack.py check` 会核对，
