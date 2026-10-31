@@ -284,7 +284,15 @@ def cmd_merge(args) -> int:
             if not rows:
                 print(f"[x] #{i} 标了并入上一条，但它是第一条", file=sys.stderr)
                 return 2
+            # 时间要并，原文也要并：只并时间会让中英两条不对称
+            # （实测 "We'll be seeing you soon." + "Amen." 合并后英文只剩前半句）
+            frag_src = " ".join(str(x) for x in _as_parts(row.get("src"), s.get("src", "")))
+            if args.normalize_en and frag_src.strip() and not CJK.search(frag_src):
+                frag_src = norm_en(frag_src)
             rows[-1]["end"] = s["end"]
+            src_idx = {"source-above": 0, "source-only": 0, "target-above": 1}.get(args.layout)
+            if frag_src.strip() and src_idx is not None:
+                rows[-1]["lines"][src_idx] = (rows[-1]["lines"][src_idx] + " " + frag_src).strip()
             merged += 1
             continue
 

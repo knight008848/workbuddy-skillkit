@@ -13,7 +13,7 @@ examples_en:
   - 'Make a Chinese-English bilingual subtitled mp4 from this English trailer'
   - 'Translate the English subtitles and lay them out with Chinese above English'
   - 'Check this bilingual subtitle file for overflow and sync issues'
-version: 1.1.1
+version: 1.1.2
 author: "个人开发者"
 license: MIT
 allowed-tools: Bash, Read, Write
@@ -184,6 +184,17 @@ python scripts/verify.py --subtitle subtitles/bilingual.srt \
 - 报告按「最可疑的句子」排序、最多 20 句，从上往下改就行，不用全改。
 - 改的地方是 `dst.json` 的 `src` 字段，不要直接改 srt（见下节）。
 
+**猜不准的句子别硬改，切出来重听一次**。把可疑句按时间切出 20 秒内的音频，带上热词  
+再跑一遍 `asr.py run`，热词会把「不可能出现的词组」拉回合理区间：
+
+```bash
+ffmpeg -ss 3.2 -to 7.1 -i input.mp4 -vn -ac 1 -ar 16000 -c:a pcm_s16le clip.wav
+python scripts/asr.py run clip.wav -o work/probe --language en --hotwords "glorious leader"
+```
+
+实测这一招把 `O'Glorious Weeda` 直接纠成 `oh glorious leader`——全片转写里那条置信度只有  
+0.48，怎么听都猜不出来；带上热词后模型自己就对了。**代价只有几秒**，比在全片重转上试参数划算。
+
 ### 断句：本地引擎已切好，仍需抽查
 
 本地引擎带了 `--sentence`，实测一部 48 秒片子切成 13 条、每条 1.4–3.2 秒，直接可用。  
@@ -195,8 +206,11 @@ python scripts/verify.py --subtitle subtitles/bilingual.srt \
 | ------- | --------------------------------------------- | ---------------------------------- |
 | 两句挤一条   | `Get back to your unit . who clicks that way` | 用数组拆成两条                            |
 | 长句超一屏   | 5 秒、40 个词的一句                                  | 同上，按语义拆 2–3 段                      |
-| 碎片单独成条  | 一条只有一个 `and`，0.4 秒                            | `"__MERGE_PREV__"`，时间并入上一条         |
+| 碎片单独成条  | 一条只有一个 `and`，0.4 秒                            | `"__MERGE_PREV__"`，时间与原文一起并入上一条    |
 | 一句被切成两条 | 上条 `I'd like to`，下条 `but it's my plan`        | 上条写合并后的完整文本，下条标 `"__MERGE_PREV__"` |
+
+**译文要自己写全**：`__MERGE_PREV__` 只负责把时间窗和原文并过去，它不会动你写的译文。  
+实测漏了这一点会得到「中文有『阿门』、英文没有」，两条不对称。
 
 ```json
 {

@@ -5,6 +5,20 @@
 
 ## [未发布]
 
+## [1.1.2] - 2026-10-31
+
+### 修复
+
+- `segments.py merge`：`__MERGE_PREV__` 现在会把被并入条目的**原文**一并接到上一条，
+  此前只并时间窗，导致中英不对称（实测中文有「阿门」、英文只剩 `We'll be seeing you soon.`）。
+  四种版式（target-above / source-above / target-only / source-only）均已回归
+
+### 文档
+
+- 低置信报告一节补「切出片段 + `--hotwords` 复听」的做法：
+  实测把 `O'Glorious Weeda`（p=0.48）纠正为 `oh glorious leader`，代价只有几秒
+- 断句一节补「译文要自己写全」，说明脚本不会替你补被合并的语义
+
 ## [1.1.1] - 2026-10-31
 
 ### 变更
