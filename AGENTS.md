@@ -197,4 +197,3 @@ grep -oE 'skills/[a-z0-9-]+' README.md | sort -u   # 与 ls skills/ 对照，应
 ## 当前待办
 
 - [ ] `skills/bilingual-subtitle/SKILL.md` 的 `author` 仍是 `"个人开发者"`，上架前必须换成入驻主体名
-- [ ] `docs/source/videocaptioner-原始稿件.md` 是否保留待定

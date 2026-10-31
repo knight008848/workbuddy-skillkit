@@ -27,7 +27,7 @@
 | `dev/output/` | 成片、抽帧 | ❌ |
 | `dev/smoke/`、`dev/subtitles/` | 早期试跑残留 | ❌ |
 | `dev/archive/` | 历史版本快照（git 之前的手工备份） | ❌ |
-| `docs/source/` | 原始稿件 | ✅ |
+| `docs/` | 上架流程（`publish.md`） | ✅ |
 | `tests/fixtures/` | 少量文本样例（JSON / srt），可复现 | ✅ |
 
 **为什么 `dev/` 不入库**：测试素材是几百 MB 的二进制视频，且每次跑流程都在变。放进去只会让仓库不可克隆、
