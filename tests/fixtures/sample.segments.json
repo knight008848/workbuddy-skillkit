@@ -1,0 +1,20 @@
+[
+  {
+    "start": 0.5,
+    "end": 3.2,
+    "src": "Today we're going to talk about how large language models actually work.",
+    "dst": "今天我们来聊聊大语言模型到底是怎么工作的。"
+  },
+  {
+    "start": 3.2,
+    "end": 6.9,
+    "src": "The core idea is surprisingly simple: predict the next token.",
+    "dst": "核心思想简单得出人意料：预测下一个词元。"
+  },
+  {
+    "start": 6.9,
+    "end": 10.4,
+    "src": "But scale changes everything.",
+    "dst": "但规模改变了一切。"
+  }
+]

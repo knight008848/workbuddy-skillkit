@@ -1,0 +1,20 @@
+# ---- 测试素材与中间产物 ----
+# dev/ 下是 275MB 视频、成片、抽帧，二进制且频繁变动，不进版本库
+/dev/
+
+# ---- 打包产物 ----
+# zip 由 build/pack.py 从 skills/ 生成，可随时重打；市场侧也另有存档
+/build/out/
+*.zip
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+
+# ---- 宿主托管数据 ----
+/.workbuddy/
+
+# ---- 系统文件 ----
+Thumbs.db
+Desktop.ini
+.DS_Store

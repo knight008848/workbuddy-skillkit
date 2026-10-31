@@ -1,0 +1,21 @@
+{
+  "name": "anime",
+  "description": "暖色文字 + 橙描边，动漫风",
+  "mode": "ass",
+  "font_name": "Microsoft YaHei",
+  "font_size": 56,
+  "primary_color": "#fff3d6",
+  "outline_color": "#ff8c1a",
+  "outline_width": 3.0,
+  "bold": true,
+  "spacing": 1.0,
+  "margin_bottom": 64,
+  "secondary": {
+    "font_name": "Arial",
+    "font_size": 40,
+    "color": "#ffe0b3",
+    "outline_color": "#c25200",
+    "outline_width": 2.5,
+    "spacing": 0.6
+  }
+}

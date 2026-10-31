@@ -1,0 +1,21 @@
+{
+  "name": "default",
+  "description": "白字黑描边，通用横屏",
+  "mode": "ass",
+  "font_name": "Microsoft YaHei",
+  "font_size": 52,
+  "primary_color": "#ffffff",
+  "outline_color": "#000000",
+  "outline_width": 2.0,
+  "bold": true,
+  "spacing": 0.6,
+  "margin_bottom": 56,
+  "secondary": {
+    "font_name": "Arial",
+    "font_size": 38,
+    "color": "#dcdcdc",
+    "outline_color": "#000000",
+    "outline_width": 2.0,
+    "spacing": 0.4
+  }
+}

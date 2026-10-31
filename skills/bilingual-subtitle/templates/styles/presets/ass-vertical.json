@@ -1,0 +1,21 @@
+{
+  "name": "vertical",
+  "description": "竖屏短视频，大字号、避开底部 UI",
+  "mode": "ass",
+  "font_name": "Microsoft YaHei",
+  "font_size": 78,
+  "primary_color": "#ffffff",
+  "outline_color": "#000000",
+  "outline_width": 3.0,
+  "bold": true,
+  "spacing": 0.8,
+  "margin_bottom": 320,
+  "secondary": {
+    "font_name": "Arial",
+    "font_size": 58,
+    "color": "#dcdcdc",
+    "outline_color": "#000000",
+    "outline_width": 3.0,
+    "spacing": 0.4
+  }
+}

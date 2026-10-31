@@ -1,0 +1,15 @@
+{
+  "name": "rounded",
+  "description": "圆角半透明底块，现代风",
+  "mode": "rounded",
+  "font_name": "Microsoft YaHei",
+  "font_size": 42,
+  "text_color": "#ffffff",
+  "bg_color": "#000000cc",
+  "corner_radius": 10,
+  "padding_h": 24,
+  "padding_v": 14,
+  "line_spacing": 10,
+  "letter_spacing": 1,
+  "margin_bottom_rounded": 64
+}

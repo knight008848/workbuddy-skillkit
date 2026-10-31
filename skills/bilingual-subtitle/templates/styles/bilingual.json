@@ -1,0 +1,45 @@
+{
+  "_说明": "双语字幕样式预设，配合 --style-override 使用（仅 --subtitle-mode hard 生效）",
+  "_用法": "--style-override \"$(cat assets/styles/bilingual.json)\" 或把字段内容内联为单行 JSON",
+  "presets": {
+    "bilingual-cinema": {
+      "font_name": "Microsoft YaHei",
+      "font_size": 52,
+      "primary_color": "#ffffff",
+      "outline_color": "#000000",
+      "outline_width": 2,
+      "bold": true,
+      "spacing": 0.5,
+      "margin_bottom": 56
+    },
+    "bilingual-vertical": {
+      "font_name": "Microsoft YaHei",
+      "font_size": 78,
+      "primary_color": "#ffffff",
+      "outline_color": "#000000",
+      "outline_width": 3,
+      "bold": true,
+      "spacing": 0.5,
+      "margin_bottom": 300
+    },
+    "bilingual-soft": {
+      "font_name": "Microsoft YaHei",
+      "font_size": 44,
+      "primary_color": "#f2f2f2",
+      "outline_color": "#1a1a1a",
+      "outline_width": 1.5,
+      "bold": false,
+      "spacing": 0.5,
+      "margin_bottom": 48
+    }
+  },
+  "rounded-example": {
+    "text_color": "#ffffff",
+    "bg_color": "#000000cc",
+    "corner_radius": 10,
+    "font_size": 42,
+    "padding_h": 24,
+    "padding_v": 12,
+    "margin_bottom": 64
+  }
+}
