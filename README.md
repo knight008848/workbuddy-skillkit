@@ -40,6 +40,7 @@
 
 # 2. 挂到 WorkBuddy 里实测（只需执行一次，之后改文件即时生效）
 python build/link.py link bilingual-subtitle
+python build/link.py list        # 必须显示 [链接]；[实体] 说明装的是旧副本，改了不生效
 #    重启会话后生效。不链接只复制的话，改完 A 测试 B 是「改了没生效」的头号原因
 
 # 3. 合规检查（对照技能市场的 8 个字段与目录白名单）

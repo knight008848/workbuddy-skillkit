@@ -157,6 +157,7 @@ ls -d skills/*/ | while read d; do n=$(basename "$d")
 
 | 现象 | 原因 | 处理 |
 |---|---|---|
+| **改了技能，WorkBuddy 里跑的仍是旧版** | `~/.workbuddy/skills/<name>` 是**手工副本**而不是链接，`link.py list` 显示 `[实体]`。曾出现装的是 1.0.0、仓库已到 1.1.1，`asr.py` 在会话里根本不存在 | 先把副本挪到 `dev/archive/`，再 `python build/link.py link <name>`；`link.py` 会拒绝在真实目录上动手，这是有意的保护 |
 | 技能 zip 里混进 CRLF | 系统级 `core.autocrlf=true`，`rebase` / `checkout` 会重写工作区 | 本仓库已设 `core.autocrlf=false`；改完文件用 `git ls-files --eol` 确认全是 `w/lf` |
 | `git status` 显示 `M`，但 `git diff --stat` 为空 | 索引里的 stat 缓存过期（大小变了、内容没变） | `git add -A` 刷新即可，**不要**当成真改动去提交 |
 | `git push` 报 502 / TLS handshake / Could not connect | 本机到 GitHub 链路间歇失败，与凭据无关。若走代理时 `api.github.com` 返回 200 而 `github.com` 返回 502，那是代理的分域规则，不是仓库问题 | 重试；交替「走代理」与 `-c http.proxy= -c https.proxy=` 直连（两种都会时通时不通，实测直连常在 502 之后成功） |
