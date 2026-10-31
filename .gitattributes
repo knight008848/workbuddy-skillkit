@@ -1,0 +1,10 @@
+# 统一用 LF 存与取。Windows 默认 autocrlf 会把文件签出成 CRLF，
+# 而 skills/ 下的文件会被原样打进技能 zip，换行符不该悄悄变成提交内容。
+* text=auto eol=lf
+
+*.mp4 binary
+*.wav binary
+*.mp3 binary
+*.png binary
+*.jpg binary
+*.zip binary
