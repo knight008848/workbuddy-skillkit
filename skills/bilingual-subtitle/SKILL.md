@@ -13,7 +13,7 @@ examples_en:
   - 'Make a Chinese-English bilingual subtitled mp4 from this English trailer'
   - 'Translate the English subtitles and lay them out with Chinese above English'
   - 'Check this bilingual subtitle file for overflow and sync issues'
-version: 1.1.0
+version: 1.1.1
 author: "个人开发者"
 license: MIT
 allowed-tools: Bash, Read, Write
@@ -26,7 +26,7 @@ agent_created: true
 合成用 `videocaptioner`，翻译环节由模型自己完成，不调用在线翻译接口。
 
 本技能负责四件事：跑之前检查环境、转写后把字幕拆成可安全翻译的条目、  
-按双语版式烧录、跑完判定合格。引擎本身的命令全表见 videocaptioner 技能。
+按双语版式烧录、跑完判定合格。引擎本身的命令全表见 `references/videocaptioner-cli.md`。
 
 **四条主线**：`preflight.py`（体检）→ `asr.py`（转写）→ `segments.py`（翻译交接）  
 → `verify.py`（验收）。

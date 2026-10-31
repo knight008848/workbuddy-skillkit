@@ -5,6 +5,14 @@
 
 ## [未发布]
 
+## [1.1.1] - 2026-10-31
+
+### 变更
+
+- 吸纳 `videocaptioner` CLI 命令全表（`references/videocaptioner-cli.md`），
+  技能自此自包含，不再依赖外部技能取参数
+- 移除配套的 `videocaptioner` 技能：它只是 CLI 的包装，不单独上架
+
 ## [1.1.0] - 2026-10-31
 
 ### 新增

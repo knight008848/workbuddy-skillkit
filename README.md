@@ -1,7 +1,7 @@
 # WorkBuddy 技能仓库
 
-自建 WorkBuddy 技能的开发与发布仓库。**一个仓库放多个技能**，`skills/` 下每个目录是一个可独立打包上架的技能，
-版本互不干扰（发 `bilingual-subtitle` 的新版不影响 `videocaptioner`）。
+自建 WorkBuddy 技能的开发与发布仓库。`skills/` 下每个目录是一个可独立打包上架的技能，
+版本互不干扰——一个技能发新版不会牵连其他技能。
 
 ## 目录职责
 
