@@ -21,6 +21,10 @@ from pathlib import Path
 
 SKILLS_HOME = Path.home() / ".workbuddy" / "skills"
 
+# mklink / rmdir 在中文 Windows 上输出 GBK，按 UTF-8 解会抛 UnicodeDecodeError
+# （异常发生在 subprocess 的读线程里，主流程看着"成功"，退出时才炸出 traceback）。
+_SUBPROC = {"capture_output": True, "text": True, "errors": "replace"}
+
 
 def is_link(p: Path) -> bool:
     if p.is_symlink():
@@ -31,11 +35,7 @@ def is_link(p: Path) -> bool:
 
 def make_link(src: Path, dst: Path):
     if os.name == "nt":
-        r = subprocess.run(
-            ["cmd", "/c", "mklink", "/J", str(dst), str(src)],
-            capture_output=True,
-            text=True,
-        )
+        r = subprocess.run(["cmd", "/c", "mklink", "/J", str(dst), str(src)], **_SUBPROC)
         if r.returncode != 0:
             raise RuntimeError((r.stdout + r.stderr).strip())
     else:
@@ -74,7 +74,7 @@ def cmd_link(args):
 def remove_link(dst: Path):
     if os.name == "nt":
         # 目录联接用 rmdir 摘掉，不会删到源目录内容
-        subprocess.run(["cmd", "/c", "rmdir", str(dst)], capture_output=True, text=True)
+        subprocess.run(["cmd", "/c", "rmdir", str(dst)], **_SUBPROC)
     else:
         dst.unlink()
 
