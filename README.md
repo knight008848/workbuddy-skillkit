@@ -64,17 +64,21 @@ git tag "bilingual-subtitle-v$V" && git push origin main "bilingual-subtitle-v$V
 ## 用 gh 发版（可选）
 
 `gh` 装在 `~/.workbuddy/tools/gh/bin/gh.exe`，但**不要 `gh auth login`**——GCM 缓存的是
-40 位 classic PAT，没有 `read:org`，登录校验会被拒。用 `build/gh.sh` 代替，它把同一凭据以
-`GH_TOKEN` 传给 gh，token 不落任何文件：
+40 位 classic PAT，没有 `read:org`，登录校验会被拒。bash 里可直接敲 `gh`（`~/bin/gh` 包装，
+Git Bash 自动把 `~/bin` 加进 PATH）；仓库内的 `build/gh.sh` 是同样逻辑的副本，供不依赖
+`~/bin` 的场合使用。两者都只是运行时注入 `GH_TOKEN`，token 不落任何文件。
+**PowerShell / cmd 里没有 gh**，需要时请开 bash。
 
 ```bash
 # 给 tag 建 Release，并把打包产物挂上去（市场之外的第二份可下载存档）
-bash build/gh.sh release create "bilingual-subtitle-v$V" \
+gh release create "bilingual-subtitle-v$V" \
   "build/out/bilingual-subtitle-$V.zip" \
   --title "bilingual-subtitle $V" --notes-file /tmp/rel.md
 
-bash build/gh.sh release list -R knight008848/workbuddy-skillkit
+gh release list -R knight008848/workbuddy-skillkit
 ```
+
+上面的命令若把 `gh` 换成 `bash build/gh.sh` 同样成立（参数完全一致）。
 
 下载 release 资产时注意：GitHub 会 302 跳到 `objects.githubusercontent.com`，本机直连超时、
 走代理只有几 KB/s。加镜像前缀即可（见 [AGENTS.md](AGENTS.md) 第 6 节）。

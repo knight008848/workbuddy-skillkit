@@ -163,7 +163,8 @@ ls -d skills/*/ | while read d; do n=$(basename "$d")
 | `git push` 报 502 / TLS handshake / Could not connect | 本机到 GitHub 链路间歇失败，与凭据无关。若走代理时 `api.github.com` 返回 200 而 `github.com` 返回 502，那是代理的分域规则，不是仓库问题 | 重试；交替「走代理」与 `-c http.proxy= -c https.proxy=` 直连（两种都会时通时不通，实测直连常在 502 之后成功） |
 | 非交互执行 git 卡住 | GCM 弹了登录窗 | 加 `GIT_TERMINAL_PROMPT=0 GCM_INTERACTIVE=never` |
 | `rmdir` 报「目录非空」但 `ls` 是空的 | Windows 文件系统延迟 | 重试一次即可 |
-| `gh auth login --with-token` 报 `missing required scope 'read:org'` | GCM 缓存的是 40 位 classic PAT，没有 `read:org`；gh 登录校验要求它 | 别登录。改用 `bash build/gh.sh ...`，它把同一凭据以 `GH_TOKEN` 传给 gh，`api` / `release` / `repo view` 都正常 |
+| `gh auth login --with-token` 报 `missing required scope 'read:org'` | GCM 缓存的是 40 位 classic PAT，没有 `read:org`；gh 登录校验要求它 | 别登录。bash 里**直接 `gh`** 即可（`~/bin/gh` 包装，Git Bash 会把 `~/bin` 自动加进 PATH）；不在 bash 场景用 `bash build/gh.sh`。两者都只是运行时注入 `GH_TOKEN`，token 不落盘 |
+| PowerShell / cmd 里 `gh` 找不到 | `~/bin` 是 Git Bash 的约定，**不在 Windows PATH**；`.cmd` 版包装已试过并放弃：GBK 控制台中文乱码、`for /f` 读 `git credential` 不稳 | 需要 gh 时就开 bash；不要在 PowerShell 里绕。要真覆盖，得改用户级 PATH，收益不值 |
 | 从 GitHub 下载 release 资产极慢或超时 | 302 跳到 `objects.githubusercontent.com`（185.199.x.x），直连超时、走代理约 3 KB/s | 用镜像前缀：`https://gh-proxy.com/https://github.com/...`（实测约 1–9 MB/s），配合 `-C -` 断点续传 |
 
 ---
